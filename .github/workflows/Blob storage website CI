@@ -1,0 +1,31 @@
+name: Blob storage website CI
+
+on:
+    push:
+        branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: azure/login@v1
+      with:
+          creds: ${{ 6yK8Q~Iu3ryO3DRCJh6UYXwa8lovIEcB08N6occv }}
+
+    - name: Upload to blob storage
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+            az storage blob upload-batch --account-name imagegallery5 --auth-mode key -d '$web' -s .
+    - name: Purge CDN endpoint
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+           az cdn endpoint purge --content-paths  "/*" --profile-name FirstCDNgroup --name EndpointCDN-csffh9gvcsbudgb6.z01.azurefd.net --resource-group my-first-vm_group
+
+  # Azure logout
+    - name: logout
+      run: |
+            az logout
+      if: always()
