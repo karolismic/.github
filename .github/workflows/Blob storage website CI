@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v3
     - uses: azure/login@v1
       with:
-          creds: ${{ 6yK8Q~Iu3ryO3DRCJh6UYXwa8lovIEcB08N6occv }}
+          creds: ${{ AZURE_CREDENTIALS }}
 
     - name: Upload to blob storage
       uses: azure/CLI@v1
